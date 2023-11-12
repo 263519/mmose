@@ -23,6 +23,8 @@
 #include <sensor_msgs/msg/laser_scan.hpp>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2/LinearMath/Quaternion.h>
+#include <memory>
+#include <thread>
 
 #define DEG2RAD (M_PI / 180.0)
 #define RAD2DEG (180.0 / M_PI)
@@ -57,6 +59,7 @@ private:
   double robot_pose_;
   double prev_robot_pose_;
   double scan_data_[3];
+  double x_,y_;
 
   // ROS timer
   rclcpp::TimerBase::SharedPtr update_timer_;
@@ -66,5 +69,15 @@ private:
   void update_cmd_vel(double linear, double angular);
   void scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg);
   void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg);
+  void sensorPID();
+  void odomPID(double angle);
+
+
+
+  //     TEST
+  void measure_distance();
+  void turn_right();
+  void turn_left();
+  void turn_back();
 };
 #endif  // TURTLEBOT3_GAZEBO__TURTLEBOT3_DRIVE_HPP_
